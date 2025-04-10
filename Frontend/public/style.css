@@ -1,0 +1,464 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f4ef;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 16px;
+}
+
+nav {
+    background-color: transparent;
+    padding: 15px 20px;
+    width: 100%;
+    border-bottom: none;
+    box-shadow: none;
+    transition: background 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+nav a {
+    text-decoration: none;
+    color: #e65100;
+    margin: 0 15px;
+    font-weight: 600;
+    transition: color 0.3s ease, text-decoration 0.3s ease, background-color 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    letter-spacing: 0.5px;
+}
+
+nav a:hover,
+nav a.active {
+    color: #ff6f00;
+    text-decoration: underline;
+    background-color: rgba(255, 152, 0, 0.1);
+}
+
+/* Theme Toggle Styles */
+#theme-toggle {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5em;
+    transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+#theme-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #212121;
+    color: #eee;
+}
+
+body.dark-mode nav a {
+    color: #ff9800;
+}
+
+body.dark-mode nav a:hover {
+    color: #ffc107;
+}
+
+body.dark-mode .home-container,
+body.dark-mode .about-container,
+body.dark-mode .encrypt-container,
+body.dark-mode .decrypt-container,
+body.dark-mode .login-container,
+body.dark-mode .history-container {
+    background-color: #37474f;
+    border-color: #ff9800;
+    box-shadow: 0px 8px 15px rgba(255, 255, 255, 0.1);
+}
+
+/* Container Styles (Rounded Corners, Borders, etc.) */
+.home-container,
+.about-container,
+.encrypt-container,
+.decrypt-container,
+.login-container,
+.history-container {
+    border: 2px solid #e65100;
+    padding: 40px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Background Elements (CSS Shapes) - Adjust positioning */
+body::before,
+body::after {
+    content: '';
+    position: absolute;
+    border: 2px solid #e65100;
+}
+
+/* Cubes (Adjusted positions) */
+body::before {
+    width: 50px;
+    height: 50px;
+    top: 20px;
+    left: 20px;
+    transform: rotate(45deg);
+}
+
+body::after {
+    width: 70px;
+    height: 70px;
+    top: 150px;
+    right: 20px;
+    transform: rotate(15deg);
+}
+
+/* Circles (Adjusted positions) */
+.circle1, .circle2 {
+    position: absolute;
+    border: 2px solid #e65100;
+    border-radius: 50%;
+}
+
+.circle1 {
+    width: 100px;
+    height: 100px;
+    bottom: 50px;
+    right: 10%;
+}
+
+.circle2 {
+    width: 60px;
+    height: 60px;
+    top: 300px;
+    left: 5%;
+}
+
+/* Plus Signs (Adjusted positions) */
+.plus1, .plus2 {
+    position: absolute;
+    color: #e65100;
+    font-size: 2em;
+}
+
+.plus1 {
+    top: 100px;
+    right: 25%;
+}
+
+.plus2 {
+    top: 400px;
+    left: 30%;
+}
+
+/* Page Content Transitions */
+.page-content {
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.page-content.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Blockchain Encryption Home Page Styles */
+.blockchain-encryption-container {
+    text-align: center;
+}
+
+.blockchain-encryption-container h1 {
+    color: #e65100;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 3.2em;
+    letter-spacing: 1px;
+}
+
+.blockchain-encryption-container h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 2.0em;
+    font-weight: 600;
+}
+
+.enhanced-paragraph {
+    font-size: 1.4em;
+    font-weight: 600;
+    text-align: justify;
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.7;
+}
+
+.blockchain-encryption-container p {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.blockchain-encryption-container h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.6em;
+    font-weight: 600;
+}
+
+.blockchain-encryption-container ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+    display: inline-block;
+}
+
+.blockchain-encryption-container li {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 1.2em;
+}
+
+/* Feature Blocks */
+.feature-blocks {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.feature-block {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.feature-block h3 {
+    color: #e65100;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+.feature-block p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Chart Styles (Example - You'll need to adapt to your data) */
+.chart-container {
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.chart {
+    width: 80%;
+    height: 300px;
+    background-color: #f0f0f0;
+    margin: 20px auto;
+    border-radius: 10px;
+}
+
+/* Dashboard Styles (Yellow Section) */
+.dashboard {
+    background-color: #fffacd;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard h2 {
+    color: #e65100;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.dashboard-item {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+    flex: 1 1 180px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Secret Key Box Styles */
+.secret-key-box {
+    border: 2px solid #e65100;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.secret-key-box h3 {
+    color: #e65100;
+    margin-bottom: 15px;
+}
+
+.secret-key-box button {
+    background: linear-gradient(to right, #ff9800, #e65100);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+}
+
+.secret-key-box button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress Bar Styles */
+#encrypt-progress-bar, #decrypt-progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+#encrypt-progress, #decrypt-progress {
+    width: 0%;
+    height: 100%;
+    background-color: #ff9800;
+    transition: width 0.3s ease;
+}
+
+/* Enhanced Input Boxes */
+.encrypt-container input[type="file"],
+.encrypt-container input[type="password"],
+.decrypt-container input[type="file"],
+.decrypt-container input[type="password"],
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.encrypt-container input[type="file"]:focus,
+.encrypt-container input[type="password"]:focus,
+.decrypt-container input[type="file"]:focus,
+.decrypt-container input[type="password"]:focus,
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #ff9800;
+    outline: none;
+}
+
+/* Button-Like Styling */
+.encrypt-container input[type="file"],
+.decrypt-container input[type="file"] {
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+.encrypt-container input[type="file"]:hover,
+.decrypt-container input[type="file"]:hover {
+    background-color: #f0f0f0;
+}
+
+/* Enhanced Buttons */
+.encrypt-container button,
+.decrypt-container button,
+.login-container button {
+    background: linear-gradient(to right, #ff9800, #e65100);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.encrypt-container button:hover,
+.decrypt-container button:hover,
+.login-container button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Checkbox Style */
+.login-container label {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.login-container input[type="checkbox"] {
+    margin-right: 5px;
+}
