@@ -6,6 +6,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { encryptAES256, decryptAES256, generateSecretKey } from "./encryption/aes.js";
 import { createCipheriv, randomBytes } from 'crypto';
+import { generateSHA256 } from "./hashing/sha.js";
+import { uploadToBlockchain } from './scripts/interact.js';
 const algorithm = 'aes-256-cbc';
 const iv = randomBytes(16);
 
@@ -24,43 +26,57 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 
-
-app.post('/encrypt', upload.single('file'), (req, res) => {
+app.post('/hash', upload.single('file'), async (req, res) => {
   const file = req.file;
   const text = req.body.text;
 
   const secretKey = generateSecretKey();
 
   try {
-    // Encrypt FILE
+    // Simulated cloud URL — replace this with your own upload service (like IPFS, AWS, etc.)
+    const fileStorageURL = "https://your-cloud-service.com/encrypted-file";
+
+    // ✅ Encrypt FILE
     if (file) {
       const fileContent = file.buffer.toString('utf-8');
       const encrypted = encryptAES256(fileContent, secretKey);
+      const hash = generateSHA256(encrypted);
+
+      // ⛓ Upload hash + URL to blockchain
+      const blockchainResult = await uploadToBlockchain(hash, fileStorageURL);
+
       return res.json({
         type: 'file',
-        encrypted,
+        hash,
         secretKey,
-        message: '✅ File encrypted successfully.'
+        ...blockchainResult,
+        message: '✅ File encrypted and uploaded to blockchain.'
       });
     }
 
-    // Encrypt TEXT
+    // ✅ Encrypt TEXT
     if (text) {
       const encrypted = encryptAES256(text, secretKey);
+      const hash = generateSHA256(encrypted);
+
+      // ⛓ Upload hash + URL to blockchain
+      const blockchainResult = await uploadToBlockchain(hash, fileStorageURL);
+
       return res.json({
         type: 'text',
-        encrypted,
+        hash,
         secretKey,
-        message: '✅ Text encrypted successfully.'
+        ...blockchainResult,
+        message: '✅ Text hashed and uploaded to blockchain.'
       });
     }
 
-    // If neither file nor text
+    // ❌ No file or text provided
     return res.status(400).json({ message: "❌ Provide either a file or text to encrypt." });
 
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "❌ Encryption failed.", error: err.message });
+    return res.status(500).json({ message: "❌ Encryption or Blockchain Upload failed.", error: err.message });
   }
 });
 

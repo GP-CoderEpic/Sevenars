@@ -202,37 +202,31 @@ async function encryptFile() {
     }
 
     const formData = new FormData();
-
-    // If file exists, append it
-    if (file) {
-        formData.append("file", file);
-    }
-
-    // If text is entered, append it too
-    if (text) {
-        formData.append("text", text);
-    }
+    if (file) formData.append("file", file);
+    if (text) formData.append("text", text);
 
     try {
-        const response = await fetch("http://localhost:3000/encrypt", {
+        const response = await fetch("http://localhost:3000/hash", {
             method: "POST",
             body: formData,
         });
 
-        if (!response.ok) throw new Error("Encryption failed.");
+        if (!response.ok) throw new Error("Encryption failed");
 
-        // 🧠 Decide how to display result based on whether file was uploaded
-        if (file) {
-            const blob = await response.blob();
+        const data = await response.json();
+
+        // ✅ Handle both cases
+        if (data.type === "file") {
+            const fileBlob = new Blob([data.encrypted], { type: "text/plain" });
             const downloadLink = document.createElement("a");
-            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.href = URL.createObjectURL(fileBlob);
             downloadLink.download = "encrypted_file.aes";
             downloadLink.click();
-            status.textContent = "✅ File encrypted and downloaded!";
-        } else {
-            const data = await response.json();
-            status.textContent = `✅ Encrypted Text:\n${data.encrypted}`;
+            status.textContent = `✅ File encrypted!\nSecret Key: ${data.secretKey}`;
+        } else if (data.type === "text") {
+            status.textContent = `✅ Text hashed!\nHash: ${data.hash}\nSecret Key: ${data.secretKey}`;
         }
+
     } catch (err) {
         console.error(err);
         status.textContent = "❌ Encryption failed.";
