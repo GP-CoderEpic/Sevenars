@@ -8,6 +8,7 @@ import { encryptAES256, decryptAES256, generateSecretKey } from "./encryption/ae
 import { createCipheriv, randomBytes } from 'crypto';
 import { generateSHA256 } from "./hashing/sha.js";
 import { uploadToBlockchain } from './scripts/interact.js';
+import mongoose from 'mongoose';
 const algorithm = 'aes-256-cbc';
 const iv = randomBytes(16);
 
@@ -21,6 +22,10 @@ const __dirname = path.dirname(__filename);
 // Serve public folder as static
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+
+mongoose
+    .connect("mongodb://localhost:27017/blockchain")
+    .then((e) => console.log("MongoDB connectet"));
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
