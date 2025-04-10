@@ -114,6 +114,7 @@ body.dark-mode .about-container,
 body.dark-mode .encrypt-container,
 body.dark-mode .decrypt-container,
 body.dark-mode .login-container,
+body.dark-mode .signup-container,
 body.dark-mode .history-container {
     background-color: #37474f;
     border-color: #ff9800;
@@ -121,12 +122,7 @@ body.dark-mode .history-container {
 }
 
 /* Container Styles (Rounded Corners, Borders, etc.) */
-.home-container,
-.about-container,
-.encrypt-container,
-.decrypt-container,
-.login-container,
-.history-container {
+.home-container{
     border: 2px solid #e65100;
     padding: 30px;
     border-radius: 15px;
@@ -139,6 +135,109 @@ body.dark-mode .history-container {
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+
+.about-container{
+    border: 2px solid #e65100;
+    padding: 30px;
+    border-radius: 15px;
+    width: 70%;
+    max-width: 800px;
+    background-color: white;
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.encrypt-container{
+    border: 2px solid #e65100;
+    padding: 30px;
+    border-radius: 15px;
+    width: 500px;
+    max-width: 900px;
+    /* height: 600px; */
+    background-color: white;
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.decrypt-container{
+    border: 2px solid #e65100;
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    height: 400px;
+    max-width: 800px;
+    background-color: white;
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.login-container{
+    border: 2px solid #e65100;
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    /* max-width: 800px; */
+    background-color: white;
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup-container{
+    border: 2px solid #e65100;
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    /* max-width: 800px; */
+    background-color: white;
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup-page,
+.login-page {
+    padding-top: 5px;
+}
+
+.signup-page button,
+.login-page button{
+    padding: 5px;
+}
+
+
+.history-container {
+    border: 2px solid #e65100;
+    padding: 30px;
+    border-radius: 15px;
+    width: 600px;
+    height: 400px;
+    max-width: 800px;
+    background-color: white;
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 
 .encrypt-section {
     margin: 15px 0;
@@ -178,15 +277,25 @@ body.dark-mode .history-container {
 }
 
 @keyframes decryptLetter {
-    0% { 
+    0% {
         opacity: 1;
         content: attr(data-value);
         transform: scale(1);
     }
-    25% { content: "@"; }
-    50% { content: "#"; }
-    75% { content: "$"; }
-    100% { 
+
+    25% {
+        content: "@";
+    }
+
+    50% {
+        content: "#";
+    }
+
+    75% {
+        content: "$";
+    }
+
+    100% {
         opacity: 1;
         content: attr(data-final);
         transform: scale(1);
@@ -222,12 +331,29 @@ body.dark-mode .history-container {
 }
 
 @keyframes scramble {
-    0% { content: 'B#@$k%h&!n En$#@pt!*n'; }
-    20% { content: 'Bl@ck$h##n En#r$pt!*n'; }
-    40% { content: 'Blo#kch@in En#rypt!on'; }
-    60% { content: 'Block#hain Encr#ption'; }
-    80% { content: 'Blockchain Encr#ption'; }
-    100% { content: 'Blockchain Encryption'; }
+    0% {
+        content: 'B#@$k%h&!n En$#@pt!*n';
+    }
+
+    20% {
+        content: 'Bl@ck$h##n En#r$pt!*n';
+    }
+
+    40% {
+        content: 'Blo#kch@in En#rypt!on';
+    }
+
+    60% {
+        content: 'Block#hain Encr#ption';
+    }
+
+    80% {
+        content: 'Blockchain Encr#ption';
+    }
+
+    100% {
+        content: 'Blockchain Encryption';
+    }
 }
 
 /* Optional: Adjust margin for better spacing */
@@ -401,7 +527,8 @@ body.dark-mode .history-container {
 }
 
 /* Progress Bar Styles */
-#encrypt-progress-bar, #decrypt-progress-bar {
+#encrypt-progress-bar,
+#decrypt-progress-bar {
     width: 100%;
     height: 20px;
     background-color: #f0f0f0;
@@ -410,7 +537,8 @@ body.dark-mode .history-container {
     overflow: hidden;
 }
 
-#encrypt-progress, #decrypt-progress {
+#encrypt-progress,
+#decrypt-progress {
     width: 0%;
     height: 100%;
     background-color: #ff9800;
@@ -420,9 +548,13 @@ body.dark-mode .history-container {
 /* Enhanced Input Boxes */
 .encrypt-container input[type="file"],
 .encrypt-container input[type="password"],
-.decrypt-container input[type="text"], /* Style for the Link input */
+.decrypt-container input[type="text"],
+/* Style for the Link input */
 .decrypt-container input[type="password"],
 .login-container input[type="text"],
+.signup-container input[type="text"],
+.signup-container input[type="password"],
+.signup-container input[type="email"],
 .login-container input[type="password"] {
     width: calc(100% - 24px);
     padding: 12px;
@@ -436,10 +568,14 @@ body.dark-mode .history-container {
 
 .encrypt-container input[type="file"]:focus,
 .encrypt-container input[type="password"]:focus,
-.decrypt-container input[type="text"]:focus, /* Focus style for the Link input */
+.decrypt-container input[type="text"]:focus,
+/* Focus style for the Link input */
 .decrypt-container input[type="password"]:focus,
 .login-container input[type="text"]:focus,
-.login-container input[type="password"]:focus {
+.login-container input[type="password"]:focus,
+.signup-container input[type="text"],
+.signup-container input[type="password"],
+.signup-container input[type="email"] {
     border-color: #ff9800;
     outline: none;
 }
@@ -459,7 +595,8 @@ body.dark-mode .history-container {
 /* Enhanced Buttons */
 .encrypt-container button,
 .decrypt-container button,
-.login-container button {
+.login-container button,
+.signup-container button {
     background: linear-gradient(to right, #ff9800, #e65100);
     color: white;
     border: none;
@@ -474,26 +611,32 @@ body.dark-mode .history-container {
 
 .encrypt-container button:hover,
 .decrypt-container button:hover,
-.login-container button:hover {
+.login-container button:hover 
+.signup-container button {
     transform: translateY(-3px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Checkbox Style */
-.login-container label {
+.login-container label,
+.signup-container label {
     display: inline-flex;
     align-items: center;
     margin-top: 10px;
 }
 
-.login-container input[type="checkbox"] {
+.login-container input,
+.signup-container input [type="checkbox"] {
     margin-right: 5px;
 }
 
 /* Decrypt Page Specific Styling to make input fields the same size */
-.decrypt-container input[type="text"], /* Style for the Link input */
-.decrypt-container input[type="password"] { /* Style for the Secret Key input */
-    width: calc(100% - 24px); /* Maintain the same width calculation */
+.decrypt-container input[type="text"],
+/* Style for the Link input */
+.decrypt-container input[type="password"] {
+    /* Style for the Secret Key input */
+    width: calc(100% - 24px);
+    /* Maintain the same width calculation */
     padding: 12px;
     margin: 10px 0;
     border: 2px solid #ddd;
@@ -503,8 +646,10 @@ body.dark-mode .history-container {
     transition: border-color 0.3s ease;
 }
 
-.decrypt-container input[type="text"]:focus, /* Focus style for the Link input */
-.decrypt-container input[type="password"]:focus { /* Focus style for the Secret Key input */
+.decrypt-container input[type="text"]:focus,
+/* Focus style for the Link input */
+.decrypt-container input[type="password"]:focus {
+    /* Focus style for the Secret Key input */
     border-color: #ff9800;
     outline: none;
 }
@@ -603,23 +748,55 @@ body.dark-mode .history-container {
     box-shadow: 0 0 20px rgba(230, 81, 0, 0.2);
 }
 
-.floating-block:nth-child(1) { width: 100px; height: 100px; left: 10%; animation-delay: 0s; }
-.floating-block:nth-child(2) { width: 80px; height: 80px; left: 30%; animation-delay: -4s; }
-.floating-block:nth-child(3) { width: 120px; height: 120px; left: 50%; animation-delay: -8s; }
-.floating-block:nth-child(4) { width: 90px; height: 90px; left: 70%; animation-delay: -12s; }
-.floating-block:nth-child(5) { width: 110px; height: 110px; left: 90%; animation-delay: -16s; }
+.floating-block:nth-child(1) {
+    width: 100px;
+    height: 100px;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-block:nth-child(2) {
+    width: 80px;
+    height: 80px;
+    left: 30%;
+    animation-delay: -4s;
+}
+
+.floating-block:nth-child(3) {
+    width: 120px;
+    height: 120px;
+    left: 50%;
+    animation-delay: -8s;
+}
+
+.floating-block:nth-child(4) {
+    width: 90px;
+    height: 90px;
+    left: 70%;
+    animation-delay: -12s;
+}
+
+.floating-block:nth-child(5) {
+    width: 110px;
+    height: 110px;
+    left: 90%;
+    animation-delay: -16s;
+}
 
 @keyframes float {
     0% {
         transform: translateY(100vh) rotate(0deg) scale(1);
         opacity: 0;
     }
+
     10% {
         opacity: 1;
     }
+
     90% {
         opacity: 1;
     }
+
     100% {
         transform: translateY(-200px) rotate(360deg) scale(1.2);
         opacity: 0;
@@ -632,9 +809,17 @@ body.dark-mode .history-container {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Add hover effect to containers */
@@ -643,6 +828,7 @@ body.dark-mode .history-container {
 .encrypt-container,
 .decrypt-container,
 .login-container,
+.signup-container,
 .history-container {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -652,6 +838,7 @@ body.dark-mode .history-container {
 .encrypt-container:hover,
 .decrypt-container:hover,
 .login-container:hover,
+.signup-container:hover,
 .history-container:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(230, 81, 0, 0.15);

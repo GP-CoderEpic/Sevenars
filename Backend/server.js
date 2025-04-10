@@ -9,6 +9,7 @@ import { createCipheriv, randomBytes } from 'crypto';
 import { generateSHA256 } from "./hashing/sha.js";
 import { uploadToBlockchain } from './scripts/interact.js';
 import mongoose from 'mongoose';
+import { User } from './model/user.js';
 const algorithm = 'aes-256-cbc';
 const iv = randomBytes(16);
 
@@ -102,6 +103,34 @@ app.post('/decrypt', (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "❌ Decryption failed", error: err.message });
+  }
+});
+
+app.post("/signup", async (req, res) => {
+  const { fullName, email, password } = req.body;
+
+  if (!fullName || !email || !password) {
+    return res.status(400).json({ message: "❌ All fields are required" });
+  }
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(409).json({ message: "❌ Email already exists" });
+  }
+
+  const user = new User({ fullName, email, password });
+  await user.save();
+  res.status(201).json({ message: "✅ Signup successful!" });
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const token = await User.matchPasswordAndGenerateToken(email, password);
+    res.json({ message: "✅ Login successful", token });
+  } catch (err) {
+    res.status(401).json({ message: err.message || "❌ Login failed" });
   }
 });
 

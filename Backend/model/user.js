@@ -1,7 +1,7 @@
-const { error } = require('console');
-const {createHmac, randomBytes} = require('crypto');
-const {Schema, model} = require('mongoose');
-const { createTokenForUser } = require('../service/authentication');
+import { error } from 'console';
+import {createHmac, randomBytes} from 'crypto';
+import {Schema, model} from 'mongoose';
+import { createTokenForUser } from '../service/authentication.js';
 
 const userSchema = new Schema({
     fullName: {
@@ -19,15 +19,6 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
-    },
-    profileImageUrl:{
-        type: String,
-        default: "/images/default.avif",
-    },
-    role: {
-        type: String,
-        enum: ["USER", "ADMIN"],
-        default: "USER",
     },
 }, {timestamps: true});
 
@@ -64,6 +55,4 @@ userSchema.static('matchPasswordAndGenerateToken', async function (email, passwo
     return token;
 });
 
-const User = model('user', userSchema);
-
-module.exports = User;
+export const User = model('user', userSchema);

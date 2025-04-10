@@ -62,17 +62,64 @@ function updateUI() {
     }
 }
 
-function login() {
-    const username = document.getElementById('login-username').value;
+async function login() {
+    const email = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
+    const status = document.getElementById('login-status');
 
-    if (username && password) {
-        userData = { username, loggedIn: true };
-        localStorage.setItem('userData', JSON.stringify(userData));
-        updateUI();
-        document.getElementById('login-status').textContent = '✅ Logged in!';
+    try {
+        const res = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+
+        localStorage.setItem("token", data.token);  // optional for protected routes
+        status.textContent = "✅ Logged in successfully!";
         setActiveNav('home');
+    } catch (err) {
+        status.textContent = err.message || "❌ Login failed";
     }
+}
+
+
+// signup page
+async function signup() {
+    const fullName = document.getElementById('signup-username').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const status = document.getElementById('signup-status');
+
+    try {
+        const res = await fetch("http://localhost:3000/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fullName, email, password })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+
+        status.textContent = data.message;
+        setTimeout(() => showLogin(), 2000);
+    } catch (err) {
+        status.textContent = err.message || "❌ Signup failed";
+    }
+}
+
+
+
+function showLogin() {
+    document.querySelector('.login-container').style.display = 'block';
+    document.querySelector('.signup-container').style.display = 'none';
+}
+
+function showSignup() {
+    document.querySelector('.login-container').style.display = 'none';
+    document.querySelector('.signup-container').style.display = 'block';
 }
 
 function logout() {
@@ -92,13 +139,13 @@ updateUI();
 //     const fileSizeDisplay = document.getElementById('encrypt-file-size');
 
 //     if (fileSizeDisplay && file) {
-//         fileSizeDisplay.textContent = `File Size: ${file.size} bytes`;
+//         fileSizeDisplay.textContent = File Size: ${file.size} bytes;
 //     }
 
 //     let progress = 0;
 //     const interval = setInterval(() => {
 //         progress += 10;
-//         if (progressBar) progressBar.style.width = `${progress}%`;
+//         if (progressBar) progressBar.style.width = ${progress}%;
 //         if (progress >= 100) {
 //             clearInterval(interval);
 //             document.getElementById('encrypt-status').textContent = '✅ File encrypted!';
@@ -173,6 +220,7 @@ async function encryptFile() {
             status.textContent = `✅ File encrypted!\nSecret Key: ${data.secretKey}`;
         } else if (data.type === "text") {
             status.textContent = `✅ Text hashed!\nHash: ${data.hash}\nSecret Key: ${data.secretKey}`;
+
         }
 
     } catch (err) {
