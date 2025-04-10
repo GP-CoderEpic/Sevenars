@@ -40,6 +40,7 @@ app.post('/hash', upload.single('file'), async (req, res) => {
     if (file) {
       const fileContent = file.buffer.toString('utf-8');
       const encrypted = encryptAES256(fileContent, secretKey);
+      
       const hash = generateSHA256(encrypted);
 
       // ⛓ Upload hash + URL to blockchain
@@ -58,6 +59,7 @@ app.post('/hash', upload.single('file'), async (req, res) => {
     if (text) {
       const encrypted = encryptAES256(text, secretKey);
       const hash = generateSHA256(encrypted);
+      console.log("Encrypted File Content:", encrypted);
 
       // ⛓ Upload hash + URL to blockchain
       const blockchainResult = await uploadToBlockchain(hash, fileStorageURL);
@@ -77,6 +79,24 @@ app.post('/hash', upload.single('file'), async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "❌ Encryption or Blockchain Upload failed.", error: err.message });
+  }
+});
+
+app.use(express.json());
+
+app.post('/decrypt', (req, res) => {
+  const { encrypted, secretKey } = req.body;
+
+  if (!encrypted || !secretKey) {
+    return res.status(400).json({ message: "❌ Missing encrypted text or secret key" });
+  }
+
+  try {
+    const decrypted = decryptAES256(encrypted, secretKey);
+    return res.json({ decrypted });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "❌ Decryption failed", error: err.message });
   }
 });
 

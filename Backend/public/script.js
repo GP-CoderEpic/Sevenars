@@ -1,186 +1,134 @@
-// Theme Toggle Functionality
+// ========== Theme Toggle ==========
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 const themeIcon = document.getElementById('theme-icon');
 
 themeToggle.addEventListener('click', () => {
     body.classList.toggle('dark-mode');
-    // Store the user's preference in localStorage
-    if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-        themeIcon.style.transform = 'rotate(180deg)'; // Rotate for dark mode
-    } else {
-        localStorage.setItem('theme', 'light');
-        themeIcon.style.transform = 'rotate(0deg)'; // Rotate for light mode
-    }
+    const isDark = body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    themeIcon.style.transform = isDark ? 'rotate(180deg)' : 'rotate(0deg)';
 });
 
-// Check for the user's saved preference
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
     body.classList.add('dark-mode');
-    themeIcon.style.transform = 'rotate(180deg)'; // Set initial rotation
+    themeIcon.style.transform = 'rotate(180deg)';
 } else {
-    themeIcon.style.transform = 'rotate(0deg)'; // Set initial rotation
+    themeIcon.style.transform = 'rotate(0deg)';
 }
 
-// Routing (Updated for Dynamic Nav Buttons)
+// ========== Navigation ==========
 const navLinks = document.querySelectorAll('.nav-link');
 const pageContents = document.querySelectorAll('.page-content');
 
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-
-        navLinks.forEach(navLink => navLink.classList.remove('active'));
-        pageContents.forEach(content => {
-            content.classList.remove('active');
-        });
-
-        link.classList.add('active');
-        document.getElementById(targetId).classList.add('active');
-    });
-});
-
-// Set initial active nav button
 function setActiveNav(targetId) {
     navLinks.forEach(link => {
-        if (link.getAttribute('href').substring(1) === targetId) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
+        const id = link.getAttribute('href').substring(1);
+        link.classList.toggle('active', id === targetId);
+    });
+    pageContents.forEach(page => {
+        page.classList.toggle('active', page.id === targetId);
     });
 }
 
-// Set initial active nav button to home page
+navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        setActiveNav(targetId);
+    });
+});
+
 setActiveNav('home');
 
-// User Data (Local Storage Simulation)
+// ========== User Login/Logout ==========
 let userData = JSON.parse(localStorage.getItem('userData')) || {
     username: null,
     loggedIn: false
 };
 
 function updateUI() {
+    const logoutBtn = document.querySelector('.log-out-btn');
+    const loginLink = document.querySelector('.nav-link[href="#login"]');
+    if (!logoutBtn || !loginLink) return;
+
     if (userData.loggedIn) {
-        document.querySelector('.log-out-btn').style.display = 'block';
-        document.querySelector('.nav-link[href="#login"]').style.display = 'none';
+        logoutBtn.style.display = 'block';
+        loginLink.style.display = 'none';
     } else {
-        document.querySelector('.log-out-btn').style.display = 'none';
-        document.querySelector('.nav-link[href="#login"]').style.display = 'block';
+        logoutBtn.style.display = 'none';
+        loginLink.style.display = 'block';
     }
 }
 
-updateUI();
-
-// Login Functionality (Placeholder)
 function login() {
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
 
-    // Simulate login (replace with actual login logic)
-    userData.username = username;
-    userData.loggedIn = true;
-    localStorage.setItem('userData', JSON.stringify(userData));
-    updateUI();
-
-    document.getElementById('login-status').textContent = 'Logged in successfully!';
-    document.getElementById('home').classList.add('active');
-    document.getElementById('login').classList.remove('active');
+    if (username && password) {
+        userData = { username, loggedIn: true };
+        localStorage.setItem('userData', JSON.stringify(userData));
+        updateUI();
+        document.getElementById('login-status').textContent = '✅ Logged in!';
+        setActiveNav('home');
+    }
 }
 
-// Logout Functionality
 function logout() {
-    userData.username = null;
-    userData.loggedIn = false;
+    userData = { username: null, loggedIn: false };
     localStorage.setItem('userData', JSON.stringify(userData));
     updateUI();
-    document.getElementById('home').classList.remove('active');
-    document.getElementById('login').classList.add('active');
+    setActiveNav('login');
 }
 
-// Encrypt File Functionality (Placeholder)
-function encryptFile() {
-    const file = document.getElementById('encrypt-file').files[0];
-    const password = document.getElementById('encrypt-password').value;
-    const progressBar = document.getElementById('encrypt-progress');
-    const fileSizeDisplay = document.getElementById('encrypt-file-size');
+updateUI();
 
-    if (file) {
-        fileSizeDisplay.textContent = `File Size: ${file.size} bytes`;
-    }
+// ========== Encrypt File/Text ==========
+// function encryptFile() {
+//     const file = document.getElementById('encrypt-file').files[0];
+//     const password = document.getElementById('encrypt-password')?.value || "defaultkey";
+//     const progressBar = document.getElementById('encrypt-progress');
+//     const fileSizeDisplay = document.getElementById('encrypt-file-size');
 
-    // Simulate encryption progress
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += 10;
-        progressBar.style.width = `${progress}%`;
-        if (progress >= 100) {
-            clearInterval(interval);
-            document.getElementById('encrypt-status').textContent = 'File encrypted!';
-            addUploadRecord(file.name, 'Encrypted');
-        }
-    }, 200);
-}
+//     if (fileSizeDisplay && file) {
+//         fileSizeDisplay.textContent = `File Size: ${file.size} bytes`;
+//     }
 
-// Decrypt File Functionality (Updated for Link Input)
-function decryptFile() {
-    const encryptedFileLink = document.getElementById('decrypt-link').value;
-    const password = document.getElementById('decrypt-password').value;
-    const progressBar = document.getElementById('decrypt-progress');
+//     let progress = 0;
+//     const interval = setInterval(() => {
+//         progress += 10;
+//         if (progressBar) progressBar.style.width = `${progress}%`;
+//         if (progress >= 100) {
+//             clearInterval(interval);
+//             document.getElementById('encrypt-status').textContent = '✅ File encrypted!';
+//             addUploadRecord(file.name, 'Encrypted');
+//         }
+//     }, 200);
+// }
 
-    if (encryptedFileLink) {
-        console.log(`Attempting to decrypt file from: ${encryptedFileLink}`);
-        // In a real application, you would:
-        // 1. Send the encryptedFileLink and password to your backend.
-        // 2. Your backend would retrieve the encrypted file from the cloud storage.
-        // 3. Your backend would perform the decryption.
-        // 4. Your backend would send the decrypted file back to the user (or handle it as needed).
-
-        // For this frontend simulation, we'll just simulate progress
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += 10;
-            progressBar.style.width = `${progress}%`;
-            if (progress >= 100) {
-                clearInterval(interval);
-                document.getElementById('decrypt-status').textContent = 'File decrypted (simulated)!';
-                // In a real scenario, you might trigger a download here.
-                const fileName = getFileNameFromLink(encryptedFileLink); // Try to extract a name
-                addUploadRecord(fileName || 'File from Link', 'Decrypted');
-            }
-        }, 200);
-    } else {
-        document.getElementById('decrypt-status').textContent = 'Please provide a link to the encrypted file.';
-    }
-}
-
-// Helper function to try and extract filename from a link
-function getFileNameFromLink(link) {
-    const parts = link.split('/');
-    return parts[parts.length - 1];
-}
-
-// Upload History (Placeholder)
+// ========== Upload History ==========
 function addUploadRecord(fileName, status) {
     const table = document.getElementById('upload-history-table').getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow(table.rows.length);
-    const cell1 = newRow.insertCell(0);
-    const cell2 = newRow.insertCell(1);
-    const cell3 = newRow.insertCell(2);
-
-    cell1.textContent = fileName;
-    cell2.textContent = new Date().toLocaleString();
-    cell3.textContent = status;
+    const newRow = table.insertRow();
+    newRow.insertCell(0).textContent = fileName;
+    newRow.insertCell(1).textContent = new Date().toLocaleString();
+    newRow.insertCell(2).textContent = status;
 }
 
-// Welcome Alert
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-        alert('Welcome to our File Encryption Service!');
-    }, 2000); // 2000 milliseconds = 2 seconds
+// ========== Welcome Message ==========
+// window.addEventListener('load', () => {
+//     setTimeout(() => {
+//         alert('👋 Welcome to our File Encryption Service!');
+//     }, 1500);
+// });
+
+// ========== Optional: Decryption Animation Fix ==========
+document.addEventListener('DOMContentLoaded', () => {
+    const title = document.querySelector('.decrypt-animation');
+    if (title) {
+        title.setAttribute('data-text', 'Blockchain Encryption');
+    }
 });
 
 
@@ -230,5 +178,48 @@ async function encryptFile() {
     } catch (err) {
         console.error(err);
         status.textContent = "❌ Encryption failed.";
+    }
+}
+
+
+async function decryptFile() {
+    const linkInput = document.getElementById('decrypt-link');
+    const keyInput = document.getElementById('decrypt-key');
+    const status = document.getElementById('decrypt-status');
+
+    const encryptedHex = linkInput.value.trim();
+    const secretKey = keyInput.value.trim();
+
+    if (!encryptedHex || !secretKey) {
+        status.textContent = "❗ Please provide both encrypted text and secret key.";
+        return;
+    }
+
+    try {
+        status.textContent = "🔄 Decrypting...";
+
+        const res = await fetch("http://localhost:3000/decrypt", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                encrypted: encryptedHex,
+                secretKey: secretKey
+            })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "❌ Decryption failed");
+
+        // Show or download decrypted content
+        const blob = new Blob([data.decrypted], { type: "text/plain" });
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = "decrypted_file.txt";
+        downloadLink.click();
+
+        status.textContent = "✅ File decrypted and downloaded!";
+    } catch (err) {
+        console.error(err);
+        status.textContent = "❌ Decryption failed.";
     }
 }

@@ -11,14 +11,14 @@
         <div class="nav-container">
             <div class="nav-links">
                 <a href="#home" class="nav-link active">Home</a>
-                <a href="#about" class="nav-link">About</a>
+                <a href="#about" class="nav-link">Guide</a>
                 <a href="#encrypt" class="nav-link">Encrypt</a>
                 <a href="#decrypt" class="nav-link">Decrypt</a>
                 <a href="#history" class="nav-link">History</a>
                 <a href="#login" class="nav-link">Login</a>
             </div>
             <button id="theme-toggle">
-                <span id="theme-icon">⏾</span>
+                <span id="theme-icon">🌕🌑</span>
             </button>
         </div>
     </nav>
@@ -26,9 +26,10 @@
     <div class="circle2"></div>
     <div class="plus1">+</div>
     <div class="plus2">+</div>
+    <!-- Remove this section from home page -->
     <div class="page-content active" id="home">
         <div class="blockchain-encryption-container">
-            <h1>Blockchain Encryption</h1>
+            <h1 id="main-title">Blockchain Encryption</h1>
             <h2>How Blockchain File Encryption Works</h2>
             <p class="enhanced-paragraph">Using blockchain for file encryption ensures secure distribution across a decentralized network. Encrypted file segments and hash values are stored on the blockchain, making it tamper-proof. Mitmified information is found in the interact of any disemmutable.</p>
             <h3>Key Features</h3>
@@ -44,12 +45,6 @@
                 <div class="feature-block">
                     <h3>Decentralized</h3>
                     <p>Decentralized and resilient architecture.</p>
-                </div>
-            </div>
-            <div class="chart-container">
-                <h2>Encryption Performance</h2>
-                <div class="chart">
-                    <p>Placeholder for chart</p>
                 </div>
             </div>
             <div class="dashboard">
@@ -74,53 +69,104 @@
             </div>
         </div>
     </div>
+    <!-- Move the about section here, inside the about page content -->
     <div class="page-content" id="about">
-        <div class="about-container">
-            <h1>About Our Encryption Service</h1>
-            <div class="section">
-                <div class="icon">&#128480;</div>
-                <div class="text">
-                    <h2>Advanced Encryption</h2>
-                    <p>We utilize cutting-edge encryption algorithms, including AES-256 and RSA-4096, to ensure the highest level of security for your data.</p>
+        <div class="guide-container">
+            <h1>How to Use Our Service</h1>
+            <div class="block-diagram">
+                <div class="diagram-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Create Account</h3>
+                        <p>Sign up or login to access encryption services</p>
+                    </div>
+                    <div class="step-arrow">↓</div>
+                </div>
+                <div class="diagram-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Choose Service</h3>
+                        <p>Select either Encrypt or Decrypt option</p>
+                    </div>
+                    <div class="step-arrow">↓</div>
+                </div>
+                <div class="diagram-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Upload File/Text</h3>
+                        <p>Upload your file or enter text to process</p>
+                    </div>
+                    <div class="step-arrow">↓</div>
+                </div>
+                <div class="diagram-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Get Results</h3>
+                        <p>Receive your encrypted/decrypted content</p>
+                    </div>
                 </div>
             </div>
-            <div class="section">
-                <div class="icon">&#128100;</div>
-                <div class="text">
-                    <h2>Expert Team</h2>
-                    <p>Our team comprises seasoned security professionals and software engineers with decades of experience in cryptography and secure systems.</p>
-                </div>
+            <div class="additional-info">
+                <h2>Important Notes</h2>
+                <ul>
+                    <li>Keep your secret key safe</li>
+                    <li>Files are encrypted using blockchain technology</li>
+                    <li>Check upload history for previous transactions</li>
+                    <li>Maximum file size: 100MB</li>
+                </ul>
             </div>
-            <div class="section">
-                <div class="icon">&#128187;</div>
-                <div class="text">
-                    <h2>Secure Infrastructure</h2>
-                    <p>We maintain a secure and resilient infrastructure, featuring redundant servers and advanced intrusion detection systems, to safeguard your files.</p>
+            <div class="about-section">
+                <h1>About Our Encryption Service</h1>
+                <div class="section">
+                    <div class="icon">&#128480;</div>
+                    <div class="text">
+                        <h2>Advanced Encryption</h2>
+                        <p>We utilize cutting-edge encryption algorithms, including AES-256 and RSA-4096, to ensure the highest level of security for your data.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="section">
-                <div class="icon">&#128274;</div>
-                <div class="text">
-                    <h2>Privacy Commitment</h2>
-                    <p>We are dedicated to protecting your privacy. Our services are designed with strict adherence to GDPR and CCPA standards.</p>
+                <div class="section">
+                    <div class="icon">&#128100;</div>
+                    <div class="text">
+                        <h2>Expert Team</h2>
+                        <p>Our team comprises seasoned security professionals and software engineers with decades of experience in cryptography and secure systems.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="section">
-                <div class="icon">&#128170;</div>
-                <div class="text">
-                    <h2>Innovation</h2>
-                    <p>We continuously innovate and update our encryption methods, incorporating the latest advancements in quantum-resistant cryptography.</p>
+                <div class="section">
+                    <div class="icon">&#128187;</div>
+                    <div class="text">
+                        <h2>Secure Infrastructure</h2>
+                        <p>We maintain a secure and resilient infrastructure, featuring redundant servers and advanced intrusion detection systems, to safeguard your files.</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="icon">&#128274;</div>
+                    <div class="text">
+                        <h2>Privacy Commitment</h2>
+                        <p>We are dedicated to protecting your privacy. Our services are designed with strict adherence to GDPR and CCPA standards.</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="icon">&#128170;</div>
+                    <div class="text">
+                        <h2>Innovation</h2>
+                        <p>We continuously innovate and update our encryption methods, incorporating the latest advancements in quantum-resistant cryptography.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="page-content" id="encrypt">
         <div class="encrypt-container">
-            <h1>Encrypt Your File</h1>
-            <input type="file" id="encrypt-file">
-            <p id="encrypt-file-size"></p>
-            <h1>OR</h1>
-            <input type="text" id="encrypt-text" placeholder="Enter text to encrypt (optional)">
+            <h1>Encrypt Your Data</h1>
+            <div class="encrypt-section">
+                <h3>Upload File</h3>
+                <input type="file" id="encrypt-file">
+                <p id="encrypt-file-size"></p>
+            </div>
+            <div class="encrypt-section">
+                <h3>Or Enter Text</h3>
+                <textarea id="encrypt-text" placeholder="Enter text to encrypt"></textarea>
+            </div>
             <div id="encrypt-progress-bar">
                 <div id="encrypt-progress"></div>
             </div>
@@ -131,7 +177,7 @@
     <div class="page-content" id="decrypt">
         <div class="decrypt-container">
             <h1>Decrypt Your File</h1>
-            <input type="text" id="decrypt-link" placeholder="Link to Encrypted File" class="input-same-size">
+            <input type="text" id="decrypt-link" placeholder="Encrypted Text" class="input-same-size">
             <input type="password" id="decrypt-key" placeholder="Secret Key" class="input-same-size">
             <div id="decrypt-progress-bar">
                 <div id="decrypt-progress"></div>
@@ -166,6 +212,13 @@
             <p id="login-status"></p>
         </div>
     </div>
-    <script src="script.js"></script>
-</body>
+    <div class="floating-blocks">
+            <div class="floating-block"></div>
+            <div class="floating-block"></div>
+            <div class="floating-block"></div>
+            <div class="floating-block"></div>
+            <div class="floating-block"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>

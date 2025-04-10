@@ -37,16 +37,36 @@ nav {
     flex-grow: 1;
 }
 
+/* Add these styles for page content visibility */
+.page-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.page-content.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Update nav styles for better interaction */
 nav a {
     text-decoration: none;
     color: #e65100;
     margin: 0 15px;
     font-weight: 600;
-    transition: color 0.3s ease, text-decoration 0.3s ease, background-color 0.3s ease;
+    transition: all 0.3s ease;
     padding: 10px 15px;
     border-radius: 8px;
     font-size: 1.1em;
     letter-spacing: 0.5px;
+    cursor: pointer;
+}
+
+nav a.active {
+    background-color: rgba(255, 152, 0, 0.2);
+    color: #ff6f00;
+    transform: translateY(-2px);
 }
 
 nav a:hover,
@@ -108,10 +128,10 @@ body.dark-mode .history-container {
 .login-container,
 .history-container {
     border: 2px solid #e65100;
-    padding: 40px;
+    padding: 30px;
     border-radius: 15px;
-    width: 80%;
-    max-width: 600px;
+    width: 70%;
+    max-width: 800px;
     background-color: white;
     text-align: center;
     position: relative;
@@ -120,96 +140,100 @@ body.dark-mode .history-container {
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Background Elements (CSS Shapes) - Adjust positioning */
-body::before,
-body::after {
-    content: '';
-    position: absolute;
-    border: 2px solid #e65100;
+.encrypt-section {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    width: calc(100% - 18px);
 }
 
-/* Cubes (Adjusted positions) */
-body::before {
-    width: 50px;
-    height: 50px;
-    top: 20px;
-    left: 20px;
-    transform: rotate(45deg);
+.encrypt-container textarea,
+.decrypt-container input[type="text"],
+.decrypt-container input[type="password"] {
+    width: calc(100% - 18px);
+    padding: 10px;
+    margin: 8px 0;
+    min-height: 80px;
 }
 
-body::after {
-    width: 70px;
-    height: 70px;
-    top: 150px;
-    right: 20px;
-    transform: rotate(15deg);
+.typing-effect {
+    font-family: monospace;
+    white-space: nowrap;
+    content: "B#@$k%h&!n En$#@pt!*n";
+    animation: decrypt 3s steps(1) forwards;
+    position: relative;
+    display: inline-block;
 }
 
-/* Circles (Adjusted positions) */
-.circle1, .circle2 {
-    position: absolute;
-    border: 2px solid #e65100;
-    border-radius: 50%;
+.typing-effect {
+    animation: none;
 }
 
-.circle1 {
-    width: 100px;
-    height: 100px;
-    bottom: 50px;
-    right: 10%;
-}
-
-.circle2 {
-    width: 60px;
-    height: 60px;
-    top: 300px;
-    left: 5%;
-}
-
-/* Plus Signs (Adjusted positions) */
-.plus1, .plus2 {
-    position: absolute;
-    color: #e65100;
-    font-size: 2em;
-}
-
-.plus1 {
-    top: 100px;
-    right: 25%;
-}
-
-.plus2 {
-    top: 400px;
-    left: 30%;
-}
-
-/* Page Content Transitions */
-.page-content {
-    width: 100%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
+.typing-effect span {
+    animation: decryptLetter 0.5s linear forwards;
+    display: inline-block;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
 }
 
-.page-content.active {
-    display: flex;
-    opacity: 1;
+@keyframes decryptLetter {
+    0% { 
+        opacity: 1;
+        content: attr(data-value);
+        transform: scale(1);
+    }
+    25% { content: "@"; }
+    50% { content: "#"; }
+    75% { content: "$"; }
+    100% { 
+        opacity: 1;
+        content: attr(data-final);
+        transform: scale(1);
+    }
 }
 
-/* Blockchain Encryption Home Page Styles */
+.typing-effect:hover::before {
+    animation: none;
+    content: "Blockchain Encryption";
+}
+
+/* Remove the old typing-effect styles and add new decryption animation */
+.blockchain-encryption-container h1 {
+    color: #d84315;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 5.5em;
+    letter-spacing: 3px;
+    font-weight: 800;
+    font-family: monospace;
+    white-space: nowrap;
+    visibility: hidden;
+}
+
+#main-title::after {
+    content: 'Blockchain Encryption';
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    animation: scramble 3s steps(30, end);
+}
+
+@keyframes scramble {
+    0% { content: 'B#@$k%h&!n En$#@pt!*n'; }
+    20% { content: 'Bl@ck$h##n En#r$pt!*n'; }
+    40% { content: 'Blo#kch@in En#rypt!on'; }
+    60% { content: 'Block#hain Encr#ption'; }
+    80% { content: 'Blockchain Encr#ption'; }
+    100% { content: 'Blockchain Encryption'; }
+}
+
+/* Optional: Adjust margin for better spacing */
 .blockchain-encryption-container {
     text-align: center;
-}
-
-.blockchain-encryption-container h1 {
-    color: #e65100;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 3.2em;
-    letter-spacing: 1px;
+    margin-bottom: 40px;
 }
 
 .blockchain-encryption-container h2 {
@@ -223,9 +247,11 @@ body::after {
     font-size: 1.4em;
     font-weight: 600;
     text-align: justify;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     color: #555;
     line-height: 1.7;
+    max-width: 800px;
+    padding: 0 20px;
 }
 
 .blockchain-encryption-container p {
@@ -292,6 +318,7 @@ body::after {
 }
 
 /* Chart Styles (Example - You'll need to adapt to your data) */
+/* Remove these chart styles */
 .chart-container {
     width: 100%;
     margin-top: 30px;
@@ -393,7 +420,7 @@ body::after {
 /* Enhanced Input Boxes */
 .encrypt-container input[type="file"],
 .encrypt-container input[type="password"],
-.decrypt-container input[type="file"],
+.decrypt-container input[type="text"], /* Style for the Link input */
 .decrypt-container input[type="password"],
 .login-container input[type="text"],
 .login-container input[type="password"] {
@@ -409,7 +436,7 @@ body::after {
 
 .encrypt-container input[type="file"]:focus,
 .encrypt-container input[type="password"]:focus,
-.decrypt-container input[type="file"]:focus,
+.decrypt-container input[type="text"]:focus, /* Focus style for the Link input */
 .decrypt-container input[type="password"]:focus,
 .login-container input[type="text"]:focus,
 .login-container input[type="password"]:focus {
@@ -461,4 +488,264 @@ body::after {
 
 .login-container input[type="checkbox"] {
     margin-right: 5px;
+}
+
+/* Decrypt Page Specific Styling to make input fields the same size */
+.decrypt-container input[type="text"], /* Style for the Link input */
+.decrypt-container input[type="password"] { /* Style for the Secret Key input */
+    width: calc(100% - 24px); /* Maintain the same width calculation */
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.decrypt-container input[type="text"]:focus, /* Focus style for the Link input */
+.decrypt-container input[type="password"]:focus { /* Focus style for the Secret Key input */
+    border-color: #ff9800;
+    outline: none;
+}
+
+/* Update encrypt section to match decrypt */
+.encrypt-section {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    width: calc(100% - 24px);
+}
+
+.encrypt-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    resize: vertical;
+    min-height: 100px;
+    background-color: white;
+}
+
+/* Update about section visibility */
+.about-section {
+    display: none;
+    margin-top: 50px;
+    padding: 30px;
+    border-top: 2px solid #e65100;
+}
+
+#home .about-section {
+    display: block;
+}
+
+.about-section .section {
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-section .section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.about-section .icon {
+    font-size: 2.5em;
+    margin-right: 20px;
+    color: #e65100;
+}
+
+.about-section .text {
+    text-align: left;
+}
+
+.about-section .text h2 {
+    color: #e65100;
+    margin-bottom: 10px;
+    font-size: 1.6em;
+}
+
+.about-section .text p {
+    color: #555;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+/* Add floating background elements */
+.floating-blocks {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.floating-block {
+    position: absolute;
+    background: linear-gradient(45deg, rgba(230, 81, 0, 0.2), rgba(255, 152, 0, 0.2));
+    border: 3px solid rgba(230, 81, 0, 0.3);
+    border-radius: 15px;
+    animation: float 20s infinite linear;
+    box-shadow: 0 0 20px rgba(230, 81, 0, 0.2);
+}
+
+.floating-block:nth-child(1) { width: 100px; height: 100px; left: 10%; animation-delay: 0s; }
+.floating-block:nth-child(2) { width: 80px; height: 80px; left: 30%; animation-delay: -4s; }
+.floating-block:nth-child(3) { width: 120px; height: 120px; left: 50%; animation-delay: -8s; }
+.floating-block:nth-child(4) { width: 90px; height: 90px; left: 70%; animation-delay: -12s; }
+.floating-block:nth-child(5) { width: 110px; height: 110px; left: 90%; animation-delay: -16s; }
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-200px) rotate(360deg) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Add pulse effect to the main title */
+.blockchain-encryption-container h1 {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Add hover effect to containers */
+.home-container,
+.about-container,
+.encrypt-container,
+.decrypt-container,
+.login-container,
+.history-container {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-container:hover,
+.about-container:hover,
+.encrypt-container:hover,
+.decrypt-container:hover,
+.login-container:hover,
+.history-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(230, 81, 0, 0.15);
+}
+
+/* Guide Page Styles */
+.guide-container {
+    width: 90%;
+    max-width: 1000px;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.block-diagram {
+    margin: 40px 0;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 10px;
+}
+
+.diagram-step {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: #d84315;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h3 {
+    color: #d84315;
+    margin: 0 0 5px 0;
+}
+
+.step-content p {
+    margin: 0;
+    color: #666;
+}
+
+.step-arrow {
+    color: #d84315;
+    font-size: 2em;
+    margin: 0 20px;
+}
+
+.additional-info {
+    margin-top: 40px;
+    padding: 20px;
+    background: #fff3e0;
+    border-radius: 10px;
+}
+
+.additional-info h2 {
+    color: #d84315;
+    margin-bottom: 20px;
+}
+
+.additional-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.additional-info li {
+    margin: 10px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.additional-info li::before {
+    content: '•';
+    color: #d84315;
+    font-size: 1.5em;
+    position: absolute;
+    left: 0;
+    top: -5px;
 }
