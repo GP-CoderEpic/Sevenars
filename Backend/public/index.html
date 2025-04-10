@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Encryption Service - Blockchain Encryption</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#encrypt" class="nav-link">Encrypt</a>
+                <a href="#decrypt" class="nav-link">Decrypt</a>
+                <a href="#history" class="nav-link">History</a>
+                <a href="#login" class="nav-link">Login</a>
+            </div>
+            <button id="theme-toggle">
+                <span id="theme-icon">⏾</span>
+            </button>
+        </div>
+    </nav>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="plus1">+</div>
+    <div class="plus2">+</div>
+    <div class="page-content active" id="home">
+        <div class="blockchain-encryption-container">
+            <h1>Blockchain Encryption</h1>
+            <h2>How Blockchain File Encryption Works</h2>
+            <p class="enhanced-paragraph">Using blockchain for file encryption ensures secure distribution across a decentralized network. Encrypted file segments and hash values are stored on the blockchain, making it tamper-proof. Mitmified information is found in the interact of any disemmutable.</p>
+            <h3>Key Features</h3>
+            <div class="feature-blocks">
+                <div class="feature-block">
+                    <h3>Secure Sharing</h3>
+                    <p>Secure file sharing among authorized users.</p>
+                </div>
+                <div class="feature-block">
+                    <h3>Tamper-Proof</h3>
+                    <p>Tamper-proof record of file modifications.</p>
+                </div>
+                <div class="feature-block">
+                    <h3>Decentralized</h3>
+                    <p>Decentralized and resilient architecture.</p>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h2>Encryption Performance</h2>
+                <div class="chart">
+                    <p>Placeholder for chart</p>
+                </div>
+            </div>
+            <div class="dashboard">
+                <h2>File Encryption Services Dashboard</h2>
+                <div class="dashboard-item">
+                    <h3>Encryption Data</h3>
+                    <p id="encryption-data">0 bytes</p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Cloud Storage</h3>
+                    <p id="cloud-storage">0 GB</p>
+                </div>
+                <div class="dashboard-item">
+                    <h3>Hashing Status</h3>
+                    <p id="hashing-status">Idle</p>
+                </div>
+            </div>
+            <div class="secret-key-box">
+                <h3>Secret Key</h3>
+                <p id="secret-key-display">Not Generated</p>
+                <button onclick="generateSecretKey()">Generate Key</button>
+            </div>
+        </div>
+    </div>
+    <div class="page-content" id="about">
+        <div class="about-container">
+            <h1>About Our Encryption Service</h1>
+            <div class="section">
+                <div class="icon">&#128480;</div>
+                <div class="text">
+                    <h2>Advanced Encryption</h2>
+                    <p>We utilize cutting-edge encryption algorithms, including AES-256 and RSA-4096, to ensure the highest level of security for your data.</p>
+                </div>
+            </div>
+            <div class="section">
+                <div class="icon">&#128100;</div>
+                <div class="text">
+                    <h2>Expert Team</h2>
+                    <p>Our team comprises seasoned security professionals and software engineers with decades of experience in cryptography and secure systems.</p>
+                </div>
+            </div>
+            <div class="section">
+                <div class="icon">&#128187;</div>
+                <div class="text">
+                    <h2>Secure Infrastructure</h2>
+                    <p>We maintain a secure and resilient infrastructure, featuring redundant servers and advanced intrusion detection systems, to safeguard your files.</p>
+                </div>
+            </div>
+            <div class="section">
+                <div class="icon">&#128274;</div>
+                <div class="text">
+                    <h2>Privacy Commitment</h2>
+                    <p>We are dedicated to protecting your privacy. Our services are designed with strict adherence to GDPR and CCPA standards.</p>
+                </div>
+            </div>
+            <div class="section">
+                <div class="icon">&#128170;</div>
+                <div class="text">
+                    <h2>Innovation</h2>
+                    <p>We continuously innovate and update our encryption methods, incorporating the latest advancements in quantum-resistant cryptography.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-content" id="encrypt">
+        <div class="encrypt-container">
+            <h1>Encrypt Your File</h1>
+            <input type="file" id="encrypt-file">
+            <p id="encrypt-file-size"></p>
+            <h1>OR</h1>
+            <input type="text" id="encrypt-text" placeholder="Enter text to encrypt (optional)">
+            <div id="encrypt-progress-bar">
+                <div id="encrypt-progress"></div>
+            </div>
+            <button onclick="encryptFile()">Encrypt</button>
+            <p id="encrypt-status"></p>
+        </div>
+    </div>
+    <div class="page-content" id="decrypt">
+        <div class="decrypt-container">
+            <h1>Decrypt Your File</h1>
+            <input type="text" id="decrypt-link" placeholder="Link to Encrypted File" class="input-same-size">
+            <input type="password" id="decrypt-key" placeholder="Secret Key" class="input-same-size">
+            <div id="decrypt-progress-bar">
+                <div id="decrypt-progress"></div>
+            </div>
+            <button onclick="decryptFile()">Decrypt</button>
+            <p id="decrypt-status"></p>
+        </div>
+    </div>
+    <div class="page-content" id="history">
+        <div class="history-container">
+            <h1>Upload History</h1>
+            <table id="upload-history-table">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Upload Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="page-content" id="login">
+        <div class="login-container">
+            <h2>LOGIN</h2>
+            <input type="text" id="login-username" placeholder="Email or Username"><br>
+            <input type="password" id="login-password" placeholder="Password"><br>
+            <label><input type="checkbox"> Remember Me</label><br>
+            <button onclick="login()">Log In</button>
+            <p id="login-status"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
