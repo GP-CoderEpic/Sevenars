@@ -13,6 +13,8 @@ import { User } from './model/user.js';
 const algorithm = 'aes-256-cbc';
 const iv = randomBytes(16);
 
+
+
 const app = express();
 const PORT = 3000;
 
@@ -98,13 +100,15 @@ app.post('/decrypt', (req, res) => {
   }
 
   try {
+    console.log("🔐 Attempting decryption... Encrypted data length:", encrypted.length);
     const decrypted = decryptAES256(encrypted, secretKey);
     return res.json({ decrypted });
   } catch (err) {
-    console.error(err);
+    console.error("❌ Decryption error:", err.message);
     return res.status(500).json({ message: "❌ Decryption failed", error: err.message });
   }
 });
+
 
 app.post("/signup", async (req, res) => {
   const { fullName, email, password } = req.body;

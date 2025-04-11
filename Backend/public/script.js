@@ -246,51 +246,83 @@ async function encryptFile() {
 
 async function decryptFile() {
     const warningEl = document.getElementById("decrypt-warning");
-    warningEl.textContent = ""; // Clear previous warning
+    const status = document.getElementById('decrypt-status');
+    warningEl.textContent = "";
+    status.textContent = "";
 
     if (!userData || !userData.loggedIn) {
         warningEl.textContent = "Please log in to use the decryption service.";
         return;
     }
+
     const linkInput = document.getElementById('decrypt-link');
     const keyInput = document.getElementById('decrypt-key');
-    const status = document.getElementById('decrypt-status');
+    const fileInput = document.getElementById('decrypt-file');
 
     const encryptedHex = linkInput.value.trim();
     const secretKey = keyInput.value.trim();
 
-    if (!encryptedHex || !secretKey) {
-        status.textContent = "❗ Please provide both encrypted text and secret key.";
+    if (!secretKey) {
+        status.textContent = "❗ Please provide the secret key.";
         return;
     }
 
-    try {
-        status.textContent = "🔄 Decrypting...";
+    const sendDecryptionRequest = async (encryptedData) => {
+        try {
+            status.textContent = "🔄 Decrypting...";
 
-        const res = await fetch("http://localhost:3000/decrypt", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                encrypted: encryptedHex,
-                secretKey: secretKey
-            })
-        });
+            const res = await fetch("http://localhost:3000/decrypt", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    encrypted: encryptedData,
+                    secretKey: secretKey
+                })
+            });
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message || "❌ Decryption failed");
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "❌ Decryption failed");
 
-        // Show or download decrypted content
-        const blob = new Blob([data.decrypted], { type: "text/plain" });
-        const downloadLink = document.createElement("a");
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = "decrypted_file.txt";
-        downloadLink.click();
+            const blob = new Blob([data.decrypted], { type: "text/plain" });
+            const downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = "decrypted_file.txt";
+            downloadLink.click();
 
-        status.textContent = "✅ File decrypted and downloaded!";
-    } catch (err) {
-        console.error(err);
-        status.textContent = "❌ Decryption failed.";
+            status.textContent = "✅ File decrypted and downloaded!";
+        } catch (err) {
+            console.error(err);
+            status.textContent = "❌ Decryption failed.";
+        }
+    };
+
+    if (encryptedHex) {
+        await sendDecryptionRequest(encryptedHex);
+    } else if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = async function (e) {
+            const fileContent = e.target.result.trim();
+            await sendDecryptionRequest(fileContent);
+        };
+        reader.readAsText(file);
+    } else {
+        status.textContent = "❗ Please provide encrypted text or upload an encrypted file.";
     }
 }
+
+function encryptAES256Browser(text, key) {
+    const iv = CryptoJS.lib.WordArray.random(16);
+    const encrypted = CryptoJS.AES.encrypt(text, CryptoJS.enc.Utf8.parse(key), {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+  
+    const ivHex = iv.toString(CryptoJS.enc.Hex);
+    const cipherHex = encrypted.ciphertext.toString(CryptoJS.enc.Hex);
+    return ivHex + ":" + cipherHex;
+  }
+  
 
 updateUI();
