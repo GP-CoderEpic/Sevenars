@@ -49,18 +49,18 @@ let userData = JSON.parse(localStorage.getItem('userData')) || {
 };
 
 function updateUI() {
-    const logoutBtn = document.querySelector('.log-out-btn');
-    const loginLink = document.querySelector('.nav-link[href="#login"]');
-    if (!logoutBtn || !loginLink) return;
+    const logoutBtn = document.getElementById("logout-btn");
+    const loginLink = document.querySelector('a[href="#login"]');
 
-    if (userData.loggedIn) {
-        logoutBtn.style.display = 'block';
-        loginLink.style.display = 'none';
+    if (userData && userData.loggedIn) {
+        logoutBtn.style.display = "inline-block";
+        loginLink.style.display = "none";
     } else {
-        logoutBtn.style.display = 'none';
-        loginLink.style.display = 'block';
+        logoutBtn.style.display = "none";
+        loginLink.style.display = "inline-block";
     }
 }
+
 
 async function login() {
     const email = document.getElementById('login-username').value;
@@ -77,9 +77,15 @@ async function login() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
 
-        localStorage.setItem("token", data.token);  // optional for protected routes
+        userData = { username: email, loggedIn: true };
+        localStorage.setItem('userData', JSON.stringify(userData));
+        updateUI();
+
+        // localStorage.setItem("token", data.token);  // optional for protected routes
         status.textContent = "✅ Logged in successfully!";
-        setActiveNav('home');
+        if (userData.loggedIn) {
+            setActiveNav('home');
+        }
     } catch (err) {
         status.textContent = err.message || "❌ Login failed";
     }
@@ -183,6 +189,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // BACKEND CONNECTION
 async function encryptFile() {
+    const warningEl = document.getElementById("encrypt-warning");
+    warningEl.textContent = ""; // Clear previous warning
+
+    if (!userData || !userData.loggedIn) {
+        warningEl.textContent = "Please log in to use the encryption service.";
+        return;
+    }
     const fileInput = document.getElementById('encrypt-file');
     const passwordInput = document.getElementById('encrypt-text'); // Text input field
     const status = document.getElementById('encrypt-status');
@@ -190,7 +203,6 @@ async function encryptFile() {
     const file = fileInput.files[0];
     const text = passwordInput.value;
 
-    // Check if file or text is provided
     if (!file && !text) {
         status.textContent = "❗ Please select a file or enter text.";
         return;
@@ -210,7 +222,6 @@ async function encryptFile() {
 
         const data = await response.json();
 
-        // ✅ Handle both cases
         if (data.type === "file") {
             const fileBlob = new Blob([data.encrypted], { type: "text/plain" });
             const downloadLink = document.createElement("a");
@@ -220,8 +231,10 @@ async function encryptFile() {
             status.textContent = `✅ File encrypted!\nSecret Key: ${data.secretKey}`;
         } else if (data.type === "text") {
             status.textContent = `✅ Text hashed!\nHash: ${data.hash}\nSecret Key: ${data.secretKey}`;
-
         }
+
+        // ✅ Add upload record after encryption
+        addUploadRecord(file?.name || 'Text Input', 'Encrypted');
 
     } catch (err) {
         console.error(err);
@@ -230,7 +243,15 @@ async function encryptFile() {
 }
 
 
+
 async function decryptFile() {
+    const warningEl = document.getElementById("decrypt-warning");
+    warningEl.textContent = ""; // Clear previous warning
+
+    if (!userData || !userData.loggedIn) {
+        warningEl.textContent = "Please log in to use the decryption service.";
+        return;
+    }
     const linkInput = document.getElementById('decrypt-link');
     const keyInput = document.getElementById('decrypt-key');
     const status = document.getElementById('decrypt-status');
@@ -271,3 +292,5 @@ async function decryptFile() {
         status.textContent = "❌ Decryption failed.";
     }
 }
+
+updateUI();

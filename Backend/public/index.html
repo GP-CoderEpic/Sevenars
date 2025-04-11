@@ -16,6 +16,7 @@
                 <a href="#decrypt" class="nav-link">Decrypt</a>
                 <a href="#history" class="nav-link">History</a>
                 <a href="#login" class="nav-link">Login</a>
+                <button id="logout-btn" onclick="logout()" style="display: none;">Logout</button>
             </div>
             <button id="theme-toggle">
                 <span id="theme-icon">🌕🌑</span>
@@ -160,10 +161,12 @@
                 <h3>Upload File</h3>
                 <input type="file" id="encrypt-file">
                 <p id="encrypt-file-size"></p>
+                
             </div>
             <div class="encrypt-section">
                 <h3>Or Enter Text</h3>
                 <textarea id="encrypt-text" placeholder="Enter text to encrypt"></textarea>
+                <p id="encrypt-warning" class="warning-text"></p>
             </div>
             <div id="encrypt-progress-bar">
                 <div id="encrypt-progress"></div>
@@ -182,6 +185,7 @@
             </div>
             <button onclick="decryptFile()">Decrypt</button>
             <p id="decrypt-status"></p>
+            <p id="decrypt-warning" class="warning-text"></p>
         </div>
     </div>
     <div class="page-content" id="history">
