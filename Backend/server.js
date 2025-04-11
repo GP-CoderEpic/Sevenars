@@ -76,7 +76,7 @@ app.post('/hash', upload.single('file'), async (req, res) => {
       const newRecord = new Data({
         encrypted,
         hash,
-        secretKeyFragments: [keyPart1, keyPart2, keyPart3],
+        secretKeyFragments: keyPart1,
         fileType: "text",
         blockchainData: blockchainResult
       });
