@@ -66,7 +66,10 @@ The **Blockchain Encryption Vault** is a secure and interactive platform that de
    ```bash
    cd Backend
    npm install
-   node server.js
+   npx hardhat node
+   npx hardhat run scripts/deploy.js --network localhost
+   nodemon server.js(in other terminal)
+
    ```
    The backend runs on `http://localhost:3000/`.
 
