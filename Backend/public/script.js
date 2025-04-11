@@ -196,6 +196,7 @@ async function encryptFile() {
         warningEl.textContent = "Please log in to use the encryption service.";
         return;
     }
+
     const fileInput = document.getElementById('encrypt-file');
     const passwordInput = document.getElementById('encrypt-text'); // Text input field
     const status = document.getElementById('encrypt-status');
@@ -222,15 +223,23 @@ async function encryptFile() {
 
         const data = await response.json();
 
+        const keyFragments = data.secretKeyFragments || [];
+
+        const formattedKey = keyFragments.length
+            ? `Secret Key Fragments:\n• ${keyFragments[0]}\n• ${keyFragments[1]}\n• ${keyFragments[2]}`
+            : "⚠️ Secret key unavailable";
+
         if (data.type === "file") {
-            const fileBlob = new Blob([data.encrypted], { type: "text/plain" });
+            const fileBlob = new Blob([data.encrypted || "Encrypted file uploaded to cloud"], {
+                type: "text/plain"
+            });
             const downloadLink = document.createElement("a");
             downloadLink.href = URL.createObjectURL(fileBlob);
             downloadLink.download = "encrypted_file.aes";
             downloadLink.click();
-            status.textContent = `✅ File encrypted!\nSecret Key: ${data.secretKey}`;
+            status.textContent = `✅ File encrypted!\n${formattedKey}`;
         } else if (data.type === "text") {
-            status.textContent = `✅ Text hashed!\nHash: ${data.hash}\nSecret Key: ${data.secretKey}`;
+            status.textContent = `✅ Text hashed!\nHash: ${data.hash}\n${formattedKey}`;
         }
 
         // ✅ Add upload record after encryption
@@ -241,6 +250,7 @@ async function encryptFile() {
         status.textContent = "❌ Encryption failed.";
     }
 }
+
 
 
 

@@ -10,6 +10,7 @@ import { generateSHA256 } from "./hashing/sha.js";
 import { uploadToBlockchain } from './scripts/interact.js';
 import mongoose from 'mongoose';
 import { User } from './model/user.js';
+import { Data } from './model/data.js';
 const algorithm = 'aes-256-cbc';
 const iv = randomBytes(16);
 
@@ -40,24 +41,27 @@ app.post('/hash', upload.single('file'), async (req, res) => {
 
   const secretKey = generateSecretKey();
 
+  // 🔐 Split secret key into 3 parts
+  const keyPart1 = secretKey.slice(0, 10);
+  const keyPart2 = secretKey.slice(10, 22);
+  const keyPart3 = secretKey.slice(22, 32);
+
   try {
-    // Simulated cloud URL — replace this with your own upload service (like IPFS, AWS, etc.)
+    // Simulated cloud URL — replace with your own upload service
     const fileStorageURL = "https://your-cloud-service.com/encrypted-file";
 
     // ✅ Encrypt FILE
     if (file) {
       const fileContent = file.buffer.toString('utf-8');
       const encrypted = encryptAES256(fileContent, secretKey);
-      
       const hash = generateSHA256(encrypted);
 
-      // ⛓ Upload hash + URL to blockchain
       const blockchainResult = await uploadToBlockchain(hash, fileStorageURL);
 
       return res.json({
         type: 'file',
         hash,
-        secretKey,
+        secretKeyFragments: [keyPart1, keyPart2, keyPart3],
         ...blockchainResult,
         message: '✅ File encrypted and uploaded to blockchain.'
       });
@@ -67,15 +71,21 @@ app.post('/hash', upload.single('file'), async (req, res) => {
     if (text) {
       const encrypted = encryptAES256(text, secretKey);
       const hash = generateSHA256(encrypted);
-      console.log("Encrypted File Content:", encrypted);
 
-      // ⛓ Upload hash + URL to blockchain
       const blockchainResult = await uploadToBlockchain(hash, fileStorageURL);
+      const newRecord = new Data({
+        encrypted,
+        hash,
+        secretKeyFragments: [keyPart1, keyPart2, keyPart3],
+        fileType: "text",
+        blockchainData: blockchainResult
+      });
+      await newRecord.save();
 
       return res.json({
         type: 'text',
         hash,
-        secretKey,
+        secretKeyFragments: [keyPart1, keyPart2, keyPart3],
         ...blockchainResult,
         message: '✅ Text hashed and uploaded to blockchain.'
       });
@@ -86,7 +96,10 @@ app.post('/hash', upload.single('file'), async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "❌ Encryption or Blockchain Upload failed.", error: err.message });
+    return res.status(500).json({
+      message: "❌ Encryption or Blockchain Upload failed.",
+      error: err.message
+    });
   }
 });
 
