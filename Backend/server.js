@@ -61,6 +61,7 @@ app.post('/hash', upload.single('file'), async (req, res) => {
       return res.json({
         type: 'file',
         hash,
+        encrypted,
         secretKeyFragments: [keyPart1, keyPart2, keyPart3],
         ...blockchainResult,
         message: '✅ File encrypted and uploaded to blockchain.'
@@ -74,7 +75,7 @@ app.post('/hash', upload.single('file'), async (req, res) => {
 
       const blockchainResult = await uploadToBlockchain(hash, fileStorageURL);
       const newRecord = new Data({
-        encrypted,
+        encrypted: encrypted,
         hash,
         secretKeyFragments: keyPart1,
         fileType: "text",

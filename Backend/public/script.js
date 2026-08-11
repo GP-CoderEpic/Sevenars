@@ -222,6 +222,7 @@ async function encryptFile() {
         if (!response.ok) throw new Error("Encryption failed");
 
         const data = await response.json();
+        
 
         const keyFragments = data.secretKeyFragments || [];
 
@@ -240,6 +241,7 @@ async function encryptFile() {
             status.textContent = `✅ File encrypted!\n${formattedKey}`;
         } else if (data.type === "text") {
             status.textContent = `✅ Text hashed!\nHash: ${data.hash}\n${formattedKey}`;
+            console.log(data);
         }
 
         // ✅ Add upload record after encryption
